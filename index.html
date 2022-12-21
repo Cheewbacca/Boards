@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Boards</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body>
+    <script type="module">
+      import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.module.js";
+      import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js";
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+      );
+
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.update();
+
+      function createVerticalPlank(x) {
+        const geometry = new THREE.BoxGeometry(0.3, 5, 0.11);
+        const material = new THREE.MeshBasicMaterial({ map: texture });
+        const board = new THREE.Mesh(geometry, material);
+        board.position.x = x;
+
+        return board;
+      }
+
+      function createHorizontalPlank(x, y) {
+        const geometry = new THREE.BoxGeometry(6, 0.3, 0.2);
+        const material = new THREE.MeshBasicMaterial({ map: texture });
+        const board = new THREE.Mesh(geometry, material);
+        board.position.x = x;
+        board.position.y = y;
+        board.position.z = -0.12;
+
+        return board;
+      }
+
+      const texture = new THREE.TextureLoader().load("wood.jpg");
+
+      const verticalBoards = [
+        createVerticalPlank(-6),
+        createVerticalPlank(0),
+        createVerticalPlank(6),
+      ];
+
+      const step = 0.35;
+      const arr = [-3, 3];
+
+      let horizontalBoards = [];
+
+      arr.map((start) => {
+        for (let i = -2.4; i <= 2.5; i += step) {
+          horizontalBoards.push(createHorizontalPlank(start, i));
+        }
+      });
+
+      scene.add(...verticalBoards, ...horizontalBoards);
+
+      const loader = new THREE.TextureLoader();
+      const bgTexture = loader.load("bg.jpg");
+      scene.background = bgTexture;
+
+      camera.position.z = 5;
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+    </script>
+  </body>
+</html>
