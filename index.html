@@ -11,6 +11,48 @@
     </style>
   </head>
   <body>
+    <div class="container">
+      <canvas id="canvas"></canvas>
+      <form>
+        <div class="inputs__container-el">
+          <label for="lightPickerX">Change light position X</label>
+          <input
+            id="lightPickerX"
+            name="lightPickerX"
+            min="-10"
+            max="10"
+            step="0.01"
+            type="range"
+            value="8"
+          />
+        </div>
+        <div class="inputs__container-el">
+          <label for="lightPickerY">Change light position Y</label>
+          <input
+            id="lightPickerY"
+            name="lightPickerY"
+            min="-10"
+            max="10"
+            step="0.01"
+            type="range"
+            value="8"
+          />
+        </div>
+        <div class="inputs__container-el">
+          <label for="lightPickerZ">Change light position Z</label>
+          <input
+            id="lightPickerZ"
+            name="lightPickerZ"
+            min="-10"
+            max="10"
+            step="0.01"
+            type="range"
+            value="8"
+          />
+        </div>
+      </form>
+    </div>
+
     <script type="module">
       import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.module.js";
       import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.121.1/examples/jsm/controls/OrbitControls.js";
@@ -23,16 +65,27 @@
         1000
       );
 
-      const renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      const renderer = new THREE.WebGLRenderer({
+        canvas: document.querySelector("#canvas"),
+      });
+
+      renderer.setSize(800, 400);
       document.body.appendChild(renderer.domElement);
 
       const controls = new OrbitControls(camera, renderer.domElement);
       controls.update();
 
+      const lightPositions = [8, 8, 8];
+
+      const light = new THREE.PointLight(0xffffff, 2);
+      light.position.set(...lightPositions);
+      scene.add(light);
+
+      const texture = new THREE.TextureLoader().load("wood.jpg");
+
       function createVerticalPlank(x) {
         const geometry = new THREE.BoxGeometry(0.3, 5, 0.11);
-        const material = new THREE.MeshBasicMaterial({ map: texture });
+        const material = new THREE.MeshPhongMaterial({ map: texture });
         const board = new THREE.Mesh(geometry, material);
         board.position.x = x;
 
@@ -41,7 +94,7 @@
 
       function createHorizontalPlank(x, y) {
         const geometry = new THREE.BoxGeometry(6, 0.3, 0.2);
-        const material = new THREE.MeshBasicMaterial({ map: texture });
+        const material = new THREE.MeshPhongMaterial({ map: texture });
         const board = new THREE.Mesh(geometry, material);
         board.position.x = x;
         board.position.y = y;
@@ -49,8 +102,6 @@
 
         return board;
       }
-
-      const texture = new THREE.TextureLoader().load("wood.jpg");
 
       const verticalBoards = [
         createVerticalPlank(-6),
@@ -76,6 +127,30 @@
       scene.background = bgTexture;
 
       camera.position.z = 5;
+
+      // light direction
+      const lightPickerX = document.querySelector('input[name="lightPickerX"]');
+      const lightPickerY = document.querySelector('input[name="lightPickerY"]');
+      const lightPickerZ = document.querySelector('input[name="lightPickerZ"]');
+
+      const lightPickers = [lightPickerX, lightPickerZ, lightPickerY];
+
+      const changeLightPos = (e, index) => {
+        const tempPositions = lightPositions;
+        tempPositions[index] = e.target.value;
+        light.position.set(...tempPositions);
+      };
+
+      let changeLightDirection;
+
+      lightPickers.map((lightPicker, index) => {
+        changeLightDirection = (e) => {
+          changeLightPos(e, index);
+        };
+
+        lightPicker.addEventListener("change", changeLightDirection);
+        lightPicker.addEventListener("input", changeLightDirection);
+      });
 
       function animate() {
         requestAnimationFrame(animate);
