@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.inputs__container { 
+    margin-top: 8px;
+    margin-left: 8px;
+}
+
+.inputs__container-el {
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
