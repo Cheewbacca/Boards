@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Boards</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -47,13 +48,21 @@
         </div>
         <div id="radioGroup">
           <div class="inputs__container-el">
-            <label for="lightPickerZ">Wood</label>
+            <label for="wood">Wood</label>
             <input id="wood" value="wood" name="texture" type="radio" checked />
           </div>
           <div class="inputs__container-el">
-            <label for="lightPickerZ">Wood 2</label>
+            <label for="wood2">Wood 2</label>
             <input id="wood2" value="wood2" name="texture" type="radio" />
           </div>
+        </div>
+        <div class="inputs__container-el">
+          <label for="select">Select the Fence</label>
+          <select id="select" value="0" name="boards">
+            <option value="0">board 1</option>
+            <option value="1">board 2</option>
+            <option value="2">board 3</option>
+          </select>
         </div>
       </form>
     </div>

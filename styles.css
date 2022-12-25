@@ -1,6 +1,21 @@
-.container {
+#canvas {
+    position:relative;
+}
+
+#canvas, canvas {
+    display: block;
+}
+
+.fullScreen {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+.fullScreen button {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
+    justify-content:center;
 }
 
 .inputs__container { 
@@ -12,5 +27,9 @@
     margin-bottom: 8px;
     display: flex;
     align-items: center;
+}
+
+.inputs__container-el select {
+    margin-left: 8px
 }
 
