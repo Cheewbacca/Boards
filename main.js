@@ -39,7 +39,7 @@ class Board1 {
     let horizontalBoards = [];
 
     this.HORIZONTAL_BOARDS_POSITIONS.map((start) => {
-      for (let i = -2.4; i <= 2.5; i += this.step) {
+      for (let i = -2.3; i <= 2.4; i += this.step) {
         horizontalBoards.push(this.createHorizontalPlank(start, i));
       }
     });
@@ -207,6 +207,93 @@ class Board3 extends Board2 {
   }
 }
 
+class Board4 extends Board1 {
+  constructor() {
+    super();
+    this.TOP_BOARDS = [-3, 3];
+  }
+
+  createTopBoard(x) {
+    const geometry = new THREE.BoxGeometry(5.75, 0.1, 0.3);
+    const board = new THREE.Mesh(geometry);
+    board.position.x = x;
+    board.position.y = 2.5;
+    board.position.z = -0.11;
+    return board;
+  }
+
+  createGeometry() {
+    const singleGeometry = new THREE.Geometry();
+
+    this.VERTICAL_BOARDS_POSITIONS.map(super.createVerticalPlank).map(
+      (vertBoard) => {
+        vertBoard.updateMatrix();
+        singleGeometry.merge(vertBoard.geometry, vertBoard.matrix);
+      }
+    );
+
+    let horizontalBoards = [];
+
+    this.HORIZONTAL_BOARDS_POSITIONS.map((start) => {
+      for (let i = -2.3; i <= 2.4; i += this.step) {
+        horizontalBoards.push(super.createHorizontalPlank(start, i));
+      }
+    });
+
+    horizontalBoards.map((horizBoard) => {
+      horizBoard.updateMatrix();
+      singleGeometry.merge(horizBoard.geometry, horizBoard.matrix);
+    });
+
+    this.TOP_BOARDS.map(this.createTopBoard).map((topBoard) => {
+      topBoard.updateMatrix();
+      singleGeometry.merge(topBoard.geometry, topBoard.matrix);
+    });
+
+    return singleGeometry;
+  }
+}
+
+class Board5 extends Board3 {
+  constructor() {
+    super();
+  }
+
+  createVerticalPlank(x) {
+    const geometry = new THREE.BoxGeometry(0.3, 5, 0.13);
+    const board = new THREE.Mesh(geometry);
+    board.position.x = x;
+
+    return board;
+  }
+
+  createGeometry() {
+    const singleGeometry = new THREE.Geometry();
+
+    this.VERTICAL_BOARDS_POSITIONS.map(this.createVerticalPlank).map(
+      (vertBoard) => {
+        vertBoard.updateMatrix();
+        singleGeometry.merge(vertBoard.geometry, vertBoard.matrix);
+      }
+    );
+
+    let horizontalBoards = [];
+    let index = 0;
+
+    for (let i = -6; i <= 6; i += this.step) {
+      horizontalBoards.push(super.createVerticalSecondaryPlank(i, index));
+      index += 1;
+    }
+
+    horizontalBoards.map((horizBoard) => {
+      horizBoard.updateMatrix();
+      singleGeometry.merge(horizBoard.geometry, horizBoard.matrix);
+    });
+
+    return singleGeometry;
+  }
+}
+
 /**
  * This function is used to change position of the light
  * @param {Event} e - inputs event
@@ -257,8 +344,10 @@ let [materialTexture] = textures;
 const board1 = new Board1().createGeometry();
 const board2 = new Board2().createGeometry();
 const board3 = new Board3().createGeometry();
+const board4 = new Board4().createGeometry();
+const board5 = new Board5().createGeometry();
 
-const BOARDS = [board1, board2, board3];
+const BOARDS = [board1, board4, board3, board2, board5];
 
 const singleGeometry = board1;
 
@@ -277,30 +366,30 @@ scene.add(light);
 camera.position.z = 5;
 
 // light direction
-const lightPickerX = document.querySelector('input[name="lightPickerX"]');
-const lightPickerY = document.querySelector('input[name="lightPickerY"]');
-const lightPickerZ = document.querySelector('input[name="lightPickerZ"]');
+// const lightPickerX = document.querySelector('input[name="lightPickerX"]');
+// const lightPickerY = document.querySelector('input[name="lightPickerY"]');
+// const lightPickerZ = document.querySelector('input[name="lightPickerZ"]');
 
-const lightPickers = [lightPickerX, lightPickerZ, lightPickerY];
+// const lightPickers = [lightPickerX, lightPickerZ, lightPickerY];
 
-let changeLightDirection;
+// let changeLightDirection;
 
-lightPickers.map((lightPicker, index) => {
-  changeLightDirection = (e) => {
-    changeLightPos(e, index);
-  };
+// lightPickers.map((lightPicker, index) => {
+//   changeLightDirection = (e) => {
+//     changeLightPos(e, index);
+//   };
 
-  lightPicker.addEventListener("change", changeLightDirection);
-  lightPicker.addEventListener("input", changeLightDirection);
-});
+//   lightPicker.addEventListener("change", changeLightDirection);
+//   lightPicker.addEventListener("input", changeLightDirection);
+// });
 
-const radioGroup = document.querySelector("#radioGroup");
+// const radioGroup = document.querySelector("#radioGroup");
 
-radioGroup.addEventListener("click", (e) => {
-  if (e.target && e.target.name === "texture") {
-    mesh.material.map = textures[TEXTURE_NAMES.indexOf(e.target.value)];
-  }
-});
+// radioGroup.addEventListener("click", (e) => {
+//   if (e.target && e.target.name === "texture") {
+//     mesh.material.map = textures[TEXTURE_NAMES.indexOf(e.target.value)];
+//   }
+// });
 
 document.querySelector("#select").addEventListener("change", (e) => {
   mesh.geometry = BOARDS[+e.target.value];

@@ -1,3 +1,11 @@
+body {
+    scroll-behavior: smooth;
+}
+
+div {
+    box-sizing: border-box;
+}
+
 #canvas {
     position:relative;
 }
@@ -26,7 +34,153 @@
 .inputs__container-el {
     margin-bottom: 8px;
     display: flex;
+    flex-direction: column;
+    align-items: flex-start
+}
+
+#radioGroup {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.layout__container{
+    margin-top: 16px;
+    position: relative;
+    width: 20vw;
+    height: 20vh;
+    opacity: 0.4;
+    transition: opacity 0.4s;
+    cursor: pointer;
+}
+
+.layout__container:hover{
+    opacity: 1;
+}
+
+.active{
+    opacity: 1;
+    cursor: default
+}
+
+.layout__container .layout_1{
+    border: 1px solid #000;
+    height: 100%;
+    padding: 8px;
+}
+
+.layout__container .layout_1 .layout_1_inner{
+    border: 1px solid #000;
+    height: 100%;
+}
+
+.layout__container .layout_1_house{
+    width: 50%;
+    height: 50%;
+    background-color: #CCCCCC;
+    display: flex;
     align-items: center;
+    justify-content:center;
+    position:absolute;
+    bottom: -50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.layout__container .layout_2_house {
+    transform: translateY(-50%);
+    z-index: 999;
+}
+
+.layout__container .layout_3 {
+    height: 100%;
+    display: flex;
+}
+
+.layout__container .layout_3 .layout_3_inner_left {
+    border: 1px solid #000;
+    height: 100%;
+    flex-basis: 60%;
+    border-right: none;
+    position: relative;
+}
+
+.layout__container .layout_3 .layout_3_inner_left::before {
+    content: "";
+    border: 1px solid #000;
+    border-right: none;
+    width: calc(100% - 16px);
+    height: calc(100% - 16px);
+    left: 8px;
+    top: 8px;
+    display: block;
+    position: absolute;
+}
+
+.layout__container .layout_3 .layout_3_inner_right {
+    height: 100%;
+    flex-basis: 40%
+}
+
+.layout__container .layout_3 .layout_3_inner_right .layout_3_inner_right_box {
+    border: 1px solid #000;
+    border-left: none;
+    height: 50%;
+    position: relative;
+}
+
+.layout__container .layout_3 .layout_3_inner_right .layout_3_inner_right_box::before {
+    content: "";
+    border: 1px solid #000;
+    border-left: none;
+    width: 100%;
+    height: calc(100% - 16px);
+    left: -8px;
+    top: 8px;
+    display: block;
+    position: absolute;
+}
+
+.layout__container .layout_3 .layout_3_inner_right .layout_3_inner_right_devider {
+    border-left: 1px solid #000;
+    height: 50%;
+    position: relative;
+}
+
+.layout__container .layout_3 .layout_3_inner_right .layout_3_inner_right_devider::before {
+    content: "";
+    border-left: 1px solid #000;
+    height: 100%;
+    left: -8px;
+    top: -8px;
+    display: block;
+    position: absolute;
+}
+
+.layout_3_house{ 
+    right: -2px !important;
+    left: initial !important
+}
+
+.garage{ 
+    left: -8px !important;
+}
+
+#dimensions{ 
+    margin-top: 100px;
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.layout_preview {
+    width:60%;
+    height: 60%;
+}
+
+.mt100{ 
+    margin-top: 100px;
 }
 
 .inputs__container-el select {
