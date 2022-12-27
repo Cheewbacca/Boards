@@ -294,17 +294,6 @@ class Board5 extends Board3 {
   }
 }
 
-/**
- * This function is used to change position of the light
- * @param {Event} e - inputs event
- * @param {number} index - current element order number
- */
-const changeLightPos = (e, index) => {
-  const tempPositions = lightPositions;
-  tempPositions[index] = e.target.value;
-  light.position.set(...tempPositions);
-};
-
 const SCENE_WIDTH = window.innerWidth >= 800 ? 800 : window.innerWidth - 18;
 const SCENE_HEIGHT = 400;
 
