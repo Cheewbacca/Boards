@@ -157,6 +157,81 @@ div {
     position: absolute;
 }
 
+.layout__container .side {
+    display: none;
+    flex-direction: column;
+    align-items:center;
+    position: absolute;
+}
+
+.layout_preview .side {
+    display: flex;
+}
+
+.side.static_side {
+    position: static;
+    display: flex;
+    align-items: center;
+}
+
+.remove_btn {
+    height: 20px;
+    margin-left: 8px;
+}
+
+.add_side{ 
+    margin-top: 12px;
+}
+
+.layout_preview .side.side_1_1 {
+    bottom: 0;
+    left: 0;
+    transform: translateY(calc(100% + 8px))
+}
+
+.layout_preview .side.side_1_2 {
+    top: 50%;
+    transform: translateX(calc(-100% - 8px))
+}
+.layout_preview .side.side_1_3 {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, calc(-100% - 8px));
+}
+.layout_preview .side.side_1_4 {
+    top: 50%;
+    right: 0;
+    transform: translateX(calc(100% + 8px))
+}
+.layout_preview .side.side_1_5 {
+    bottom: 0;
+    right: 0;
+    transform: translateY(calc(100% + 8px))
+}
+.layout_preview .side.side_3_4 {
+    top: 0;
+    right: 0;
+    transform: translate(calc(100% + 8px), 100%)
+}
+.layout_preview .side.side_3_5 {
+    top: 0;
+    right: 0;
+    transform: translate(8px, 25vh)
+}
+.layout_preview .side.side_3_6 {
+    top: 0;
+    right: 0;
+    transform: translate(-100%, 32vh);
+}
+
+.side .side__input {
+    display: flex;
+}
+
+.side .side__input p {
+    margin-left: 8px;
+}
+
 .layout_3_house{ 
     right: -2px !important;
     left: initial !important
