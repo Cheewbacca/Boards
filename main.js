@@ -365,32 +365,6 @@ scene.add(light);
 
 camera.position.z = 5;
 
-// light direction
-// const lightPickerX = document.querySelector('input[name="lightPickerX"]');
-// const lightPickerY = document.querySelector('input[name="lightPickerY"]');
-// const lightPickerZ = document.querySelector('input[name="lightPickerZ"]');
-
-// const lightPickers = [lightPickerX, lightPickerZ, lightPickerY];
-
-// let changeLightDirection;
-
-// lightPickers.map((lightPicker, index) => {
-//   changeLightDirection = (e) => {
-//     changeLightPos(e, index);
-//   };
-
-//   lightPicker.addEventListener("change", changeLightDirection);
-//   lightPicker.addEventListener("input", changeLightDirection);
-// });
-
-// const radioGroup = document.querySelector("#radioGroup");
-
-// radioGroup.addEventListener("click", (e) => {
-//   if (e.target && e.target.name === "texture") {
-//     mesh.material.map = textures[TEXTURE_NAMES.indexOf(e.target.value)];
-//   }
-// });
-
 document.querySelector("#select").addEventListener("change", (e) => {
   mesh.geometry = BOARDS[+e.target.value];
 });
